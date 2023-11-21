@@ -1,21 +1,67 @@
 import React, { useState } from 'react';
+
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   UserOutlined,
   VideoCameraOutlined,
+  LogoutOutlined,
+  EditOutlined,
+  SearchOutlined,
 } from '@ant-design/icons';
-import { Layout, Menu, Button, theme, Avatar, Space } from 'antd';
-import { Divider, List, Typography } from 'antd';
+import { Layout, Menu, Button, theme, Avatar, Space, Row, Divider, Table, Input, Dropdown } from 'antd';
+
+
+
+
+import { DownOutlined } from '@ant-design/icons';
+import menu from 'antd/es/menu';
+import PatientProfile from './pages/PatienteProfile';
+
 
 const { Header, Sider, Content } = Layout;
 
+const { Search } = Input;
+
 const data = [
-  'Racing car sprays burning fuel into crowd.',
-  'Japanese princess to wed commoner.',
-  'Australian walks 100km after outback crash.',
-  'Man charged over missing wedding girl.',
-  'Los Angeles battles huge wildfires.',
+  {
+    key: '1',
+    name: 'Nome Paciente 1',
+    email: 'paciente1@email.com',
+    cpf: '123.456.789-01',
+    status: 'Aberto',
+  },
+  {
+    key: '2',
+    name: 'Nome Paciente 2',
+    email: 'paciente2@email.com',
+    cpf: '234.567.890-12',
+    status: 'Fechado',
+  },
+  // Adicione mais pacientes conforme necessário
+];
+
+const columns = [
+  {
+    title: 'Nome',
+    dataIndex: 'name',
+    key: 'name',
+  },
+  {
+    title: 'E-mail',
+    dataIndex: 'email',
+    key: 'email',
+  },
+  {
+    title: 'CPF',
+    dataIndex: 'cpf',
+    key: 'cpf',
+  },
+  {
+    title: 'Status',
+    dataIndex: 'status',
+    key: 'status',
+  },
 ];
 
 const App: React.FC = () => {
@@ -23,6 +69,17 @@ const App: React.FC = () => {
   const {
     token: { colorBgContainer },
   } = theme.useToken();
+
+    const menu = (
+    <Menu>
+      <Menu.Item key="editProfile" icon={<EditOutlined />}>
+        Editar Perfil
+      </Menu.Item>
+      <Menu.Item key="logout" icon={<LogoutOutlined />}>
+        Logout
+      </Menu.Item>
+    </Menu>
+  );
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
@@ -48,25 +105,31 @@ const App: React.FC = () => {
       </Sider>
       <Layout>
         <Header style={{ padding: 0, background: colorBgContainer }}>
-          <Button
-            type="text"
-            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-            onClick={() => setCollapsed(!collapsed)}
-            style={{
-              fontSize: '16px',
-              width: 64,
-              height: 64,
-            }}
-          />
-          <Space
-            direction="vertical"
-            align="end"
-            style={{ marginRight: '24px', marginTop: '16px' }}
-          >
-            <Space wrap size={16}>
+          <Row justify="space-between" align="middle">
+            <Button
+              type="text"
+              icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+              onClick={() => setCollapsed(!collapsed)}
+              style={{
+                fontSize: '16px',
+                width: 64,
+                height: 64,
+              }}
+            />
+            <Space
+              direction="horizontal"
+              align="center"
+              style={{ marginRight: '24px', marginTop: '16px' }}
+            >
               <Avatar size="large" icon={<UserOutlined />} />
+              Nome do Médico
+              <Dropdown overlay={menu} placement="bottomRight">
+                  <Button type="text" style={{ color: '#fff' }}>
+                    <DownOutlined />
+                  </Button>
+                </Dropdown>
             </Space>
-          </Space>
+          </Row>
         </Header>
         <Content
           style={{
@@ -76,15 +139,22 @@ const App: React.FC = () => {
             background: colorBgContainer,
           }}
         >
-        <Divider orientation="left">Pacientes</Divider>
-    <List
-      size="large"
-      header={<div>Header</div>}
-      footer={<div>Footer</div>}
-      bordered
-      dataSource={data}
-      renderItem={(item) => <List.Item>{item}</List.Item>}
-    />
+          <Divider orientation="left">
+            <Space>
+              Pacientes
+              <SearchOutlined />
+            </Space>
+          </Divider>
+          <Search
+            placeholder="Digite para buscar"
+            style={{ marginBottom: '16px' }}
+          />
+           <Table dataSource={data} columns={columns} onRow={(record) => ({
+            onClick: () => {
+              // Redirecionar para a página do perfil do paciente ao clicar na linha
+              window.location.href = `pages/PatienteProile/${record.key}`;
+            },
+          })} />
           
         </Content>
       </Layout>
