@@ -2,13 +2,8 @@ import React, { useState } from 'react';
 import {UserAddOutlined,} from '@ant-design/icons';
 import { Layout,  Button, theme,  Space,  Divider, Table, Input,  Modal, Form, Input as AntInput, Select } from 'antd';
 
-const { Header, Sider, Content } = Layout;
-
 const { Search } = Input;
 const { Option } = Select;
-
-
-
 
 const columns = [
   {
@@ -48,6 +43,8 @@ const PatienteSearch: React.FC = () => {
   const handleCancel = () => {
     setIsModalVisible(false);
   };
+
+  
 
   const [data, setData] = useState([
     {
@@ -110,7 +107,7 @@ const PatienteSearch: React.FC = () => {
         <Table dataSource={data} columns={columns} onRow={(record) => ({
           onClick: () => {
             // Redirecionar para a página do perfil do paciente ao clicar na linha
-            window.location.href = `pages/PatientProfile/${record.key}`;
+            window.location.href = `/PatienteProfile/`;
           },
         })} />
 

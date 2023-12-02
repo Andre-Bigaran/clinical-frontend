@@ -15,10 +15,11 @@ import { Layout, Menu, Button, theme, Avatar, Space, Row, Divider, Table, Input,
 import PatienteProfile from './PatienteProfile';
 import menu from 'antd/es/menu';
 import PatienteSearch from './PatienteSearch';
+import { useNavigate } from 'react-router-dom';
 
 const { Header, Sider, Content } = Layout;
 
-const App: React.FC = () => {
+const Home: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [selectedMenuKey, setSelectedMenuKey] = useState('1'); // Estado para rastrear a chave do item de menu selecionado
   const {
@@ -32,7 +33,7 @@ const App: React.FC = () => {
   const renderContent = () => {
     switch (selectedMenuKey) {
       case '1':
-        return <div>Conteúdo do Item 1</div>;
+        return <div>Bem vindo!</div>;
       case '2':
         return <PatienteProfile/>;
       case '3':
@@ -42,12 +43,19 @@ const App: React.FC = () => {
     }
   };
 
+  const navigate = useNavigate();
+
+   const handleLogin = () => {
+    // Navegar para a página de login
+    navigate('/login');
+  };
+
     const menu = (
     <Menu>
       <Menu.Item key="editProfile" icon={<EditOutlined />}>
         Editar Perfil
       </Menu.Item>
-      <Menu.Item key="logout" icon={<LogoutOutlined />}>
+      <Menu.Item key="logout" icon={<LogoutOutlined />} onClick={handleLogin}>
         Logout
       </Menu.Item>
     </Menu>
@@ -125,4 +133,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default Home;

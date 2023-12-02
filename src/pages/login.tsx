@@ -27,7 +27,7 @@ const navigate = useNavigate();
 
   // Redireciona para outra página se o login for bem-sucedido
   if (loggedIn) {
-    navigate('/PatienteSearch');
+    navigate('/Home');
   }
 
 
