@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
 import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  UploadOutlined,
   UserOutlined,
   MedicineBoxFilled,
-  VideoCameraOutlined,
+  ClockCircleOutlined,
 } from '@ant-design/icons';
-import { Layout, Menu, Button, theme, Card, Input, Avatar, Modal } from 'antd';
+import { Layout, Button, theme, Card, Input, Avatar, Modal, Row, Col, Space, DatePicker, TimePicker } from 'antd';
 
-const { Header, Sider, Content } = Layout;
+const { Content } = Layout;
 
 const RecordCard: React.FC<{ title: string; content: string }> = ({ title, content }) => (
   <Card title={title} style={{ marginBottom: '8px' }}>
@@ -23,6 +20,7 @@ const PatienteProfile: React.FC = () => {
   const [comments, setComments] = useState<string[]>([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [prescription, setPrescription] = useState('');
+  const [quantity, setQuantity] = useState('');
 
   const {
     token: { colorBgContainer },
@@ -38,10 +36,16 @@ const PatienteProfile: React.FC = () => {
     setIsModalVisible(true);
   };
 
-  const handleModalOk = () => {
+  const handleModalPre = () => {
     // Handle prescription submission logic here
     setIsModalVisible(false);
     setPrescription('');
+  };
+
+  const handleModalQnt = () => {
+    // Handle prescription submission logic here
+    setIsModalVisible(false);
+    setQuantity('');
   };
 
   const handleModalCancel = () => {
@@ -54,128 +58,154 @@ const PatienteProfile: React.FC = () => {
   ];
 
 
+  function handleTimeChange(timeString: string): void {
+    throw new Error('Function not implemented.');
+  }
+
   return (
-    <Layout>
-      <Sider trigger={null} collapsible collapsed={collapsed}>
-        <div className="demo-logo-vertical" />
-        <Menu
-          theme="dark"
-          mode="inline"
-          defaultSelectedKeys={['1']}
-          items={[
-            {
-              key: '1',
-              icon: <UserOutlined />,
-              label: 'nav 1',
-            },
-            {
-              key: '2',
-              icon: <VideoCameraOutlined />,
-              label: 'nav 2',
-            },
-            {
-              key: '3',
-              icon: <UploadOutlined />,
-              label: 'nav 3',
-            },
-          ]}
-        />
-      </Sider>
-      <Layout>
-        <Header style={{ padding: 0, background: colorBgContainer }}>
-          <Button
-            type="text"
-            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-            onClick={() => setCollapsed(!collapsed)}
-            style={{
-              fontSize: '16px',
-              width: 64,
-              height: 64,
-            }}
-          />
-        </Header>
-        <Content
-          style={{
-            margin: '24px 16px',
-            padding: 24,
-            minHeight: '100vh',
-            background: colorBgContainer,
-          }}
-        >
-          <div style={{ display: 'flex', flexDirection: 'row', height: '100%' }}>
-            {/* Div da esquerda dividida ao meio */}
-            <div style={{ flex: 1, marginRight: '8px', marginBottom: '8px' }}>
-              <div style={{ height: '40%', background: '#f3f3f3', borderRadius: "16px" }}>
-                {/* Resumo do perfil */}
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '16px', marginBottom: '8px' }}
-                >
-                  <Avatar size={64} icon={<UserOutlined />} />
-                  <h2>Nome do Paciente</h2>
-                  <p>E-mail do Paciente</p>
-                  <p>Endereço do Paciente</p>
-                </div>
-              </div>
-
-              <div style={{ height: '40%', background: '#f3f3f3', borderRadius: "16px" }}>
-                {/* Cards dos últimos registros */}
-                {records.map((record, index) => (
-                  <RecordCard key={index} title={record.title} content={record.content} />
-                ))}
-              </div>
+    <Layout style={{ padding: '10px', borderRadius: '16px', minHeight: '100vh' }}>
+      <div style={{ display: 'flex', flexDirection: 'row', height: '100%' }}>
+        {/* Div da esquerda dividida ao meio */}
+        <div style={{ flex: 1, marginRight: '8px', marginBottom: '8px' }}>
+          <div style={{ height: '65%', background: '#fff', borderRadius: "16px" }}>
+            {/* Resumo do perfil */}
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '16px', marginBottom: '8px' }}
+            >
+              <Avatar size={64} icon={<UserOutlined />} />
+              <h2>Nome do Paciente</h2>
+              <p>E-mail do Paciente</p>
+              <p>Endereço do Paciente</p>
             </div>
+          </div>
 
-            {/* Div da direita dividida em três partes */}
-            <div style={{ flex: 1 }}>
-              <div style={{ height: '20%', marginBottom: '8px', background: '#f3f3f3', borderRadius: "16px" }}>
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '16px' }}>
-                  <Button type="primary" icon={<MedicineBoxFilled />} style={{ marginBottom: '8px' }} onClick={handlePrescribeMedication}>
-                    Receitar Medicamento
-                  </Button>
-                </div>
-              </div>
-              <Modal
-                title="Prescrever Medicamento"
-                visible={isModalVisible}
-                onOk={handleModalOk}
-                onCancel={handleModalCancel}
+          <div style={{ height: '40%', background: '#fff', borderRadius: "16px" }}>
+            {/* Cards dos últimos registros */}
+            {records.map((record, index) => (
+              <RecordCard key={index} title={record.title} content={record.content} />
+            ))}
+          </div>
+        </div>
+
+        {/* Div da direita dividida em três partes */}
+        <div style={{ flex: 1 }}>
+          <div style={{ height: '40%', marginBottom: '8px', background: '#fff', borderRadius: "16px", display: 'flex', flexDirection: 'row' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '16px' }}>
+              <Button
+                type="primary"
+                style={{
+                  width: '120px',
+                  height: '120px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+                onClick={handlePrescribeMedication}
               >
+                <Space direction="vertical" size={4}>
+                  <MedicineBoxFilled style={{ fontSize: '30px' }} />
+                  <span>Receitar<br /> Medicamento</span>
+                </Space>
+              </Button>
+
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '16px' }}>
+              <Button
+                type="primary"
+                style={{
+                  width: '120px',
+                  height: '120px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+                onClick={handlePrescribeMedication}
+              >
+                <Space direction="vertical" size={4}>
+                  <ClockCircleOutlined style={{ fontSize: '30px' }} />
+                  <span>Agendar<br /> Consulta</span>
+                </Space>
+              </Button>
+
+            </div>
+          </div>
+          <Modal
+            title="Prescrever Medicamento"
+            visible={isModalVisible}
+            onOk={handleModalPre}
+            onCancel={handleModalCancel}
+          >
+            <Row gutter={16}>
+              <Col span={17}>
                 <Input
-                  placeholder="Nome do Medicamento e Quantidade"
+                  placeholder="Nome do Medicamento"
                   value={prescription}
                   onChange={(e) => setPrescription(e.target.value)}
                 />
-              </Modal>
-            
-            <div style={{ height: '20%', marginBottom: '8px', background: '#f3f3f3', borderRadius: "16px" }}>
-              {/* Input para escrever comentário */}
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '16px' }}>
+              </Col>
+              <Col span={5}>
                 <Input
-                  placeholder="Escreva um comentário"
-                  value={comment}
-                  onChange={(e) => setComment(e.target.value)}
-                  style={{ marginBottom: '8px' }}
+                  placeholder="Qnt"
+                  value={quantity}
+                  onChange={(e) => setQuantity(e.target.value)}
                 />
-                <Button type="primary" onClick={handleCommentSubmit}>
-                  Enviar Comentário
-                </Button>
-              </div>
+              </Col>
+            </Row>
+          </Modal>
+
+          <Modal
+            title="Agendar Consulta"
+            visible={isModalVisible}
+            onOk={handleModalPre}
+            onCancel={handleModalCancel}
+          >
+
+            <Row gutter={16} style={{ marginTop: '16px' }}>
+              <Col span={12}>
+                <DatePicker
+                  style={{ width: '100%' }}
+                  placeholder="Selecione a data"
+                  onChange={(date, dateString) => handleTimeChange(dateString)}
+                />
+              </Col>
+              <Col span={12}>
+                <TimePicker
+                  style={{ width: '100%' }}
+                  placeholder="Selecione a hora"
+                  onChange={(time, timeString) => handleTimeChange(timeString)}
+                />
+              </Col>
+            </Row>
+          </Modal>
+
+          <div style={{ height: '60%', marginBottom: '8px', background: '#fff', borderRadius: "16px" }}>
+            {/* Input para escrever comentário */}
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '16px' }}>
+              <Input
+                placeholder="Escreva um comentário"
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                style={{ marginBottom: '8px' }}
+              />
+              <Button type="primary" onClick={handleCommentSubmit}>
+                Enviar Comentário
+              </Button>
             </div>
-            <div style={{ height: '33.33%', background: '#f3f3f3', borderRadius: "16px" }}>
-              {/* Comentários */}
-              <div style={{ padding: '16px' }}>
-                <h3>Comentários:</h3>
-                <ul>
-                  {comments.map((c, index) => (
-                    <li key={index}>{c}</li>
-                  ))}
-                </ul>
-              </div>
+            <div style={{ padding: '16px' }}>
+              <h3>Comentários:</h3>
+              <ul>
+                {comments.map((c, index) => (
+                  <li key={index}>{c}</li>
+                ))}
+              </ul>
             </div>
           </div>
         </div>
-      </Content>
+      </div>
+
     </Layout>
-    </Layout >
+
   );
 };
 

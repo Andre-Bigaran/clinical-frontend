@@ -5,6 +5,7 @@ import Login from './pages/login';
 import Cadastro from './pages/cadastro';
 import PatienteProfile from './pages/PatienteProfile';
 import PatienteSearch from './pages/PatienteSearch';
+import MenuLateral from './pages/MenuLateral';
 
 const App: React.FC = () => {
   return (
@@ -17,6 +18,7 @@ const App: React.FC = () => {
         <Route path="/cadastro" element={<Cadastro />} />
         <Route path="/PatienteProfile" element={<PatienteProfile />} />
         <Route path="/PatienteSearch" element={<PatienteSearch />} />
+        <Route path="/MenuLateral" element={<MenuLateral />} />
       </Routes>
     </Router>
   );
