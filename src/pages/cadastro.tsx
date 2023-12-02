@@ -1,11 +1,18 @@
 import React from 'react';
 import { Row, Col, Form, Input, Button } from 'antd';
 import { UserOutlined, MailOutlined, LockOutlined, CalendarOutlined, IdcardOutlined, EnvironmentOutlined, HeartFilled } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
 
 const Cadastro: React.FC = () => {
   const onFinish = (values: any) => {
     // Lógica de autenticação aqui
     console.log('Received values:', values);
+  };
+const navigate = useNavigate();
+
+   const handleLogin = () => {
+    // Navegar para a página de login
+    navigate('/login');
   };
 
   
@@ -74,7 +81,7 @@ const Cadastro: React.FC = () => {
             </Form>
             
             <div className="separator"></div>
-            <Button type="default" style={{ width: '100%' }}>
+            <Button type="default" onClick={handleLogin} style={{ width: '100%' }}>
               Voltar
             </Button>
           </div>

@@ -1,13 +1,36 @@
-import React from 'react';
-import { Row, Col, Form, Input, Button } from 'antd';
-import { HeartFilled, HeartOutlined, LockOutlined, MailOutlined } from '@ant-design/icons';
-
+import React, { useState } from 'react';
+import { Row, Col, Form, Input, Button, message } from 'antd';
+import { HeartFilled, LockOutlined, MailOutlined } from '@ant-design/icons';
+import { redirect } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Login: React.FC = () => {
+  const [loggedIn, setLoggedIn] = useState(false);
+
+const navigate = useNavigate();
   const onFinish = (values: any) => {
-    // Lógica de autenticação aqui
-    console.log('Received values:', values);
+    // Lógica de autenticação simulada
+    const { email, password } = values;
+
+    // Verifique os detalhes do usuário (simulado)
+    if (email === 'usuario@example.com' && password === 'senha123') {
+      // Usuário autenticado com sucesso
+      console.log('Usuário autenticado:', values);
+      message.success('Login bem-sucedido!');
+      setLoggedIn(true); // Define loggedIn como true para redirecionar
+    } else {
+      // Autenticação falhou
+      console.log('Falha na autenticação:', values);
+      message.error('Credenciais inválidas. Tente novamente.');
+    }
   };
+
+  // Redireciona para outra página se o login for bem-sucedido
+  if (loggedIn) {
+    navigate('/PatienteSearch');
+  }
+
+
 
   return (
     <div className="app-container">
@@ -53,5 +76,6 @@ const Login: React.FC = () => {
     </div>
   );
 };
+
 
 export default Login;

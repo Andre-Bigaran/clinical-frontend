@@ -17,7 +17,7 @@ const RecordCard: React.FC<{ title: string; content: string }> = ({ title, conte
   </Card>
 );
 
-const App: React.FC = () => {
+const PatienteProfile: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [comment, setComment] = useState('');
   const [comments, setComments] = useState<string[]>([]);
@@ -179,4 +179,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default PatienteProfile;

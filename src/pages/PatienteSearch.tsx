@@ -58,7 +58,7 @@ const columns = [
   },
 ];
 
-const App: React.FC = () => {
+const PatienteSearch: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [form] = Form.useForm();
@@ -231,4 +231,4 @@ const App: React.FC = () => {
       );
 };
 
-      export default App;
+      export default PatienteSearch;
